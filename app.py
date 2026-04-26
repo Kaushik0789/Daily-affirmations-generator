@@ -2,10 +2,34 @@ import streamlit as st
 import random
 from datetime import datetime
 
-# Page Config
-st.set_page_config(page_title="Daily Affirmations", page_icon="✨")
+# 1. Page Config
+st.set_page_config(page_title="Mindset Master", page_icon="✨")
 
-# Affirmations list
+# 2. Add Background Image using Python
+# You can replace this URL with any image link you prefer
+bg_image_url = "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=2070"
+
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url("{bg_image_url}");
+        background-attachment: fixed;
+        background-size: cover;
+    }}
+    
+    /* This part makes the text area readable by adding a semi-transparent overlay */
+    .main-container {{
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 30px;
+        border-radius: 15px;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# --- Rest of your logic ---
 affirmations = [
     "I am confident and capable.",
     "I believe in myself.",
@@ -16,44 +40,34 @@ affirmations = [
     "Today will be a great day.",
     "Changing my mind is a strength, not a weakness.",
     "I am good and getting better.",
-    "I alone hold the truth of who I am.",
+    "I alone hold the truth of who I am."
 ]
 
-# Initialize Session State (This replaces global variables in web apps)
 if 'current_affirmation' not in st.session_state:
     st.session_state.current_affirmation = ""
 if 'favorites' not in st.session_state:
     st.session_state.favorites = []
 
-# Title and Date
-st.title("🌟 Daily Affirmation Generator")
-st.write(f"**{datetime.now().strftime('%A, %d %B %Y')}**")
-
-# Layout
-col1, col2 = st.columns(2)
-
-with col1:
+# Using a container to make the content pop against the background
+with st.container():
+    st.title("🌟 Daily Affirmation")
+    st.write(f"### {datetime.now().strftime('%A, %d %B')}")
+    
     if st.button("Generate ✨"):
         st.session_state.current_affirmation = random.choice(affirmations)
+        st.balloons()
 
-# Display Affirmation
-if st.session_state.current_affirmation:
-    st.info(f"### {st.session_state.current_affirmation}")
-    
-    if st.button("Save to Favorites ❤️"):
-        if st.session_state.current_affirmation not in st.session_state.favorites:
-            st.session_state.favorites.append(st.session_state.current_affirmation)
-            st.success("Added to favorites!")
-        else:
-            st.warning("Already in favorites!")
-else:
-    st.write("Click the button to start your day with positivity.")
+    if st.session_state.current_affirmation:
+        # Displaying the affirmation in a nice box
+        st.info(f"**{st.session_state.current_affirmation}**")
+        
+        if st.button("Save ❤️"):
+            if st.session_state.current_affirmation not in st.session_state.favorites:
+                st.session_state.favorites.append(st.session_state.current_affirmation)
+                st.toast("Saved!")
 
-# Favorites Sidebar
+# Sidebar for favorites
 with st.sidebar:
     st.header("My Favorites ❤️")
-    if st.session_state.favorites:
-        for fav in st.session_state.favorites:
-            st.write(f"- {fav}")
-    else:
-        st.write("No favorites saved yet.")
+    for f in st.session_state.favorites:
+        st.write(f"• {f}")
