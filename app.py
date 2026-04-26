@@ -7,7 +7,7 @@ st.set_page_config(page_title="Mindset Master", page_icon="✨")
 
 # 2. Add Background Image using Python
 # You can replace this URL with any image link you prefer
-bg_image_url = https://i.postimg.cc/brxP0Ydw/Pngtree-a-background-of-orange-blue-15791586
+bg_image_url = "https://i.postimg.cc/brxP0Ydw/Pngtree-a-background-of-orange-blue-15791586.jpg"
 
 st.markdown(
     f"""
