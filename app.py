@@ -55,7 +55,6 @@ with st.container():
     
     if st.button("Generate ✨"):
         st.session_state.current_affirmation = random.choice(affirmations)
-        st.balloons()
 
     if st.session_state.current_affirmation:
         # Displaying the affirmation in a nice box
